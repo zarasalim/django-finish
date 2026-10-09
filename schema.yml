@@ -1,0 +1,558 @@
+openapi: 3.0.3
+info:
+  title: Fundraising API
+  version: 1.0.0
+  description: REST API для групповых денежных сборов и пожертвований.
+paths:
+  /api/collects/:
+    get:
+      operationId: collects_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - collects
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCollectList'
+          description: ''
+    post:
+      operationId: collects_create
+      tags:
+      - collects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Collect'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Collect'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Collect'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collect'
+          description: ''
+  /api/collects/{id}/:
+    get:
+      operationId: collects_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Сбор.
+        required: true
+      tags:
+      - collects
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collect'
+          description: ''
+    put:
+      operationId: collects_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Сбор.
+        required: true
+      tags:
+      - collects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Collect'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Collect'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Collect'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collect'
+          description: ''
+    patch:
+      operationId: collects_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Сбор.
+        required: true
+      tags:
+      - collects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCollect'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCollect'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCollect'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collect'
+          description: ''
+    delete:
+      operationId: collects_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Сбор.
+        required: true
+      tags:
+      - collects
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/collects/{id}/payments/:
+    get:
+      operationId: collects_payments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Сбор.
+        required: true
+      tags:
+      - collects
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collect'
+          description: ''
+  /api/payments/:
+    get:
+      operationId: payments_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - payments
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPaymentList'
+          description: ''
+    post:
+      operationId: payments_create
+      tags:
+      - payments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Payment'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+  /api/payments/{id}/:
+    get:
+      operationId: payments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Пожертвование.
+        required: true
+      tags:
+      - payments
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+    put:
+      operationId: payments_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Пожертвование.
+        required: true
+      tags:
+      - payments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Payment'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+    patch:
+      operationId: payments_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Пожертвование.
+        required: true
+      tags:
+      - payments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPayment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPayment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPayment'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+    delete:
+      operationId: payments_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Пожертвование.
+        required: true
+      tags:
+      - payments
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    Collect:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        author:
+          type: string
+          readOnly: true
+        title:
+          type: string
+          title: Название
+          maxLength: 200
+        occasion:
+          allOf:
+          - $ref: '#/components/schemas/OccasionEnum'
+          title: Повод
+        description:
+          type: string
+          title: Описание
+        target_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Целевая сумма
+          description: Оставьте пустым для сбора без ограничения суммы.
+        collected_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        cover:
+          type: string
+          format: uri
+          nullable: true
+          title: Обложка
+        end_at:
+          type: string
+          format: date-time
+          nullable: true
+          title: Дата и время завершения
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата создания
+      required:
+      - author
+      - collected_amount
+      - created_at
+      - description
+      - id
+      - title
+    OccasionEnum:
+      enum:
+      - birthday
+      - wedding
+      - charity
+      - gift
+      - other
+      type: string
+      description: |-
+        * `birthday` - День рождения
+        * `wedding` - Свадьба
+        * `charity` - Благотворительность
+        * `gift` - Подарок
+        * `other` - Другое
+    PaginatedCollectList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Collect'
+    PaginatedPaymentList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+    PatchedCollect:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        author:
+          type: string
+          readOnly: true
+        title:
+          type: string
+          title: Название
+          maxLength: 200
+        occasion:
+          allOf:
+          - $ref: '#/components/schemas/OccasionEnum'
+          title: Повод
+        description:
+          type: string
+          title: Описание
+        target_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+          title: Целевая сумма
+          description: Оставьте пустым для сбора без ограничения суммы.
+        collected_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        cover:
+          type: string
+          format: uri
+          nullable: true
+          title: Обложка
+        end_at:
+          type: string
+          format: date-time
+          nullable: true
+          title: Дата и время завершения
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата создания
+    PatchedPayment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        collect:
+          type: integer
+          title: Сбор
+        user:
+          type: string
+          readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Сумма пожертвования
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата и время пожертвования
+    Payment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        collect:
+          type: integer
+          title: Сбор
+        user:
+          type: string
+          readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          title: Сумма пожертвования
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата и время пожертвования
+      required:
+      - amount
+      - collect
+      - created_at
+      - id
+      - user
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
